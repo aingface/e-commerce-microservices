@@ -50,7 +50,7 @@ async def verify_user(sign_in_request: SignInRequest, user_dal: UserDAL = Depend
       data={"sub": db_user.email}, expires_delta=access_token_expires
     )
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user_email": db_user.email ,"name": db_user.name}
 
 @router.put("/users/{user_id}", response_model=UserOut)
 async def update_user(user_id: int, user: UserIn, user_dal: UserDAL = Depends(get_user_dal)):
