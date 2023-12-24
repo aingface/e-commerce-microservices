@@ -24,15 +24,12 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
-    // 로그인 로직을 여기에 작성합니다.
-    // 로그인이 실패하면 setLoginError를 호출하여 loginError 상태를 true로 설정합니다.
-    // 예: setLoginError(true);
-
     const res = await user_signin(email, password);
     if (!res) {
       setLoginError(true);
       alert("로그인에 실패하였습니다.");
     } else {
+      console.log(res);
       alert("로그인에 성공했습니다.");
       navigate("/");
     }
