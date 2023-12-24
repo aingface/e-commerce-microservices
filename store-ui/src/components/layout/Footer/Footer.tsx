@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Paper } from "@mui/material";
+import { render } from "@testing-library/react";
 function Footer() {
   return (
     <footer className="footer">
@@ -15,12 +16,7 @@ function Footer() {
             width: "100%", // Keep this line
           }}
         >
-          <Grid
-            container
-            sx={{ mb: 1, p: 1 }}
-            justifyContent="space-between"
-            style={{ backgroundColor: "#e0e0e0" }}
-          >
+          <Grid container sx={{ mb: 1, p: 1 }} justifyContent="space-between">
             <Grid
               item
               xs={8}
@@ -42,7 +38,7 @@ function Footer() {
               justifyContent="flex-end"
               alignItems="center"
             >
-              Copyright © 2022
+              Copyright © 2024 aingface All rights reserved.
             </Grid>
           </Grid>
         </Box>
