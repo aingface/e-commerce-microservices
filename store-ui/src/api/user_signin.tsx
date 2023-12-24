@@ -1,8 +1,8 @@
 import axiosClient, { userUrl } from "./config";
 
-const signin = async (email: string, password: string) => {
+const user_signin = async (email: string, password: string) => {
   try {
-    const response = await axiosClient.post(userUrl + "users", {
+    const response = await axiosClient.post(userUrl + "sign-in", {
       email: email,
       password: password,
     });
@@ -12,4 +12,4 @@ const signin = async (email: string, password: string) => {
   }
 };
 
-export default signin;
+export default user_signin;
