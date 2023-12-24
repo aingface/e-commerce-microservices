@@ -5,6 +5,7 @@ import Cart from "./pages/Cart/Cart";
 import Layout from "./components/layout/Layout";
 import SignIn from "./pages/SignIn/SignIn";
 import MyPage from "./pages/MyPage/MyPage";
+import SignUp from "./pages/SignUp/SignUp";
 
 const App = (props: any) => {
   return (
@@ -14,6 +15,7 @@ const App = (props: any) => {
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/MyPage" element={<MyPage />} />
       </Routes>
     </Layout>
