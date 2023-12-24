@@ -71,7 +71,11 @@ export default function PrimarySearchAppBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event: any) => {
-    setAnchorEl(event.currentTarget);
+    // setAnchorEl(event.currentTarget);
+    // 유저 로그인 정보가 있으면 마이페이지로 이동
+    navigate("/sign-in");
+    // 유저 로그인 정보가 없으면 로그인 페이지로 이동
+    // navigate("mypage");
   };
 
   const handleMobileMenuClose = () => {
@@ -85,6 +89,11 @@ export default function PrimarySearchAppBar() {
 
   const handleMobileMenuOpen = (event: any) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleOnClickCart = () => {
+    //현재 로그인한 유저가 있는지 검증 후 현재 로그인한 유저의 cart 정보를 보여주는 로직 구현 필요
+    navigate("/cart");
   };
 
   const menuId = "primary-search-account-menu";
@@ -236,8 +245,9 @@ export default function PrimarySearchAppBar() {
               aria-label="1 item in your shopping cart"
               color="inherit"
             >
+              {/* 뱃지 카운트 하드코딩 돼있음. 실제 api와 연동 필요 */}
               <Badge badgeContent={1} color="error">
-                <ShoppingCartIcon />
+                <ShoppingCartIcon onClick={handleOnClickCart} />
               </Badge>
             </IconButton>
           </Box>
