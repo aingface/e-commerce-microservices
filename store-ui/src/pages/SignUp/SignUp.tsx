@@ -12,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useState } from "react";
 import user_signup from "../../api/user_signup";
+import { useNavigate } from "react-router-dom";
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -21,16 +23,24 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
 
-  const handleSubmit = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
     if (name !== "" && email !== "" && password !== "") {
-      user_signup(name, email, password).then((res) => {
-        if (res) {
-          alert("회원가입이 완료되었습니다.");
-          window.location.href = "/";
-        } else {
+      try {
+        const res = await user_signup(name, email, password);
+        if (!res) {
           alert("회원가입에 실패하였습니다.");
+          // 회원가입 실패 시에는 추가적인 리디렉션 없이 함수 종료
+          return;
+        } else {
+          alert("회원가입에 성공했습니다.");
+          console.log("Navigating to /sign-in");
+          navigate("/sign-in");
         }
-      });
+      } catch (error) {
+        console.error("Error during signup:", error);
+      }
     } else {
       alert("모든 항목을 입력해주세요.");
     }
@@ -112,7 +122,7 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
