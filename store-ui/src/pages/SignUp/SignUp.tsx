@@ -11,27 +11,43 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useState } from "react";
+import user_signup from "../../api/user_signup";
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const handleSubmit = () => {
+    if (name !== "" && email !== "" && password !== "") {
+      user_signup(name, email, password).then((res) => {
+        if (res) {
+          alert("회원가입이 완료되었습니다.");
+          window.location.href = "/";
+        } else {
+          alert("회원가입에 실패하였습니다.");
+        }
+      });
+    } else {
+      alert("모든 항목을 입력해주세요.");
+    }
   };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     setEmailError(!emailRegex.test(event.target.value));
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
   };
 
   return (
@@ -52,12 +68,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             회원가입
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -68,6 +79,7 @@ export default function SignUp() {
                   id="name"
                   label="이름"
                   autoFocus
+                  onChange={handleNameChange}
                 />
               </Grid>
 
@@ -95,6 +107,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handlePasswordChange}
                 />
               </Grid>
             </Grid>
@@ -103,6 +116,7 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               회원가입
             </Button>
