@@ -24,3 +24,7 @@ class UserOut(UserBase):
 #'orm_mode' has been renamed to 'from_attributes'
     class Config:
         from_attributes = True
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str

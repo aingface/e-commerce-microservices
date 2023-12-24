@@ -7,6 +7,8 @@ from db.config import async_session, engine, Base
 import uvicorn
 from routers.user_router import router
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer
+
 # create db session
 async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
@@ -14,6 +16,8 @@ async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession
 app = FastAPI()
 # import routers
 app.include_router(router)
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @app.on_event("startup")
 async def startup():
