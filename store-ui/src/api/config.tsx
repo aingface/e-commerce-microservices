@@ -15,4 +15,7 @@ export const productsUrl =
 export const cartUrl =
   process.env.REACT_APP_CART_URL_BASE || "http://localhost:8080/";
 
+export const userUrl =
+  process.env.REACT_APP_USER_URL_BASE || "http://localhost:9090/";
+
 export default axiosClient;
