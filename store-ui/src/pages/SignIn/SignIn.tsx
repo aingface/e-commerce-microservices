@@ -11,6 +11,7 @@ import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import user_signin from "../../api/user_signin";
+import { useBearStore } from "../../store/store";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -21,6 +22,8 @@ export default function SignIn() {
   const [emailError, setEmailError] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
+  const { setLoginData } = useBearStore();
+
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
@@ -30,6 +33,12 @@ export default function SignIn() {
       alert("로그인에 실패하였습니다.");
     } else {
       console.log(res);
+      setLoginData(
+        res.accessToken,
+        true,
+        res.loggedInUserEmail,
+        res.loggedInUserName
+      );
       alert("로그인에 성공했습니다.");
       navigate("/");
     }
