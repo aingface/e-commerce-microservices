@@ -41,13 +41,14 @@ const Product = () => {
       currency: product?.currency,
     };
 
-    const result = await addToCart(loggedInUserEmail, item);
-    console.log(result);
-    if (result) {
+    const response = await addToCart(loggedInUserEmail, item);
+    if (response && (response.status === 200 || response.status === 201)) {
+      console.log(`response.status: ${response.status}`);
       alert("카트에 추가되었습니다.");
       // 이때 카드에 담긴 아이템 개수 업데이트
     } else {
-      alert("카트에 추가에 실패했습니다.");
+      console.log(`response.status: ${response?.status}`);
+      alert("카트 추가에 실패했습니다.");
     }
   };
 

@@ -17,9 +17,11 @@ const addToCart = async (loggedInUserEmail: string | null, item: any) => {
       }
     );
 
-    console.log(response.data);
-
-    return response.data;
+    // Return the status code along with the data
+    return {
+      status: response.status,
+      data: response.data,
+    };
   } catch (err: any) {
     console.log(err);
   }
