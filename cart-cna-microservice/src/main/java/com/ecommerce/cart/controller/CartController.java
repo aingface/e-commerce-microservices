@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import com.ecommerce.cart.model.Cart;
 import com.ecommerce.cart.model.CartItem;
@@ -77,25 +79,27 @@ public class CartController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/cart/{customerId}")
-    Mono<Void> addToCart(@PathVariable String customerId, @RequestBody Mono<CartItem> newItemMono) {
-        return cartOps.get(customerId)
-            .defaultIfEmpty(new Cart(customerId))
-            .flatMap(cart -> newItemMono.flatMap(newItem -> {
-                for (CartItem item : cart.getItems()) {
-                    if (item.getProductId().equals(newItem.getProductId())) {
-                        item.setQuantity(item.getQuantity() + newItem.getQuantity());
-                        cart.setTotal(cart.getTotal() + newItem.getPrice() * newItem.getQuantity());
-                        return Mono.just(cart);
+    public Mono<ResponseEntity<Void>> addToCart(@PathVariable String customerId, @RequestBody Mono<CartItem> newItemMono) {
+        return newItemMono.doOnNext(newItem -> LOG.info("🔥🔥🔥🔥 Adding item to cart: {}", newItem))
+            .flatMap(newItem -> cartOps.get(customerId)
+                .defaultIfEmpty(new Cart(customerId))
+                .flatMap(cart -> {
+                    for (CartItem item : cart.getItems()) {
+                        if (item.getProductId().equals(newItem.getProductId())) {
+                            item.setQuantity(item.getQuantity() + newItem.getQuantity());
+                            cart.setTotal(cart.getTotal() + newItem.getPrice() * newItem.getQuantity());
+                            return Mono.just(cart);
+                        }
                     }
-                }
-                cart.getItems().add(newItem);
-                cart.setTotal(cart.getTotal() + newItem.getPrice() * newItem.getQuantity());
-                return Mono.just(cart);
-            }))
-            .flatMap(cart -> {
-                LOG.info("✅✅✅✅ Adding item to cart: {}", cart);
-                return cartOps.set(customerId, cart);
-            })
-            .then();
+                    cart.getItems().add(newItem);
+                    cart.setTotal(cart.getTotal() + newItem.getPrice() * newItem.getQuantity());
+                    return Mono.just(cart);
+                }))
+                .flatMap(cart -> {
+                    LOG.info("✅✅✅✅ Adding item to cart: {}", cart);
+                    return cartOps.set(customerId, cart);
+                })
+                .thenReturn(new ResponseEntity<Void>(HttpStatus.CREATED))
+                .onErrorReturn(new ResponseEntity<Void>(HttpStatus.BAD_REQUEST));
     }
 }
