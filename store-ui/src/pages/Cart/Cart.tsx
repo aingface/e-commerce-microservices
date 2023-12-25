@@ -15,6 +15,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useBearStore } from "../../store/store";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -23,13 +25,27 @@ const Cart = () => {
 
   const [textQuantity, setQuantity] = useState<number>(1);
 
+  const { loggedInUserEmail } = useBearStore();
+
   const onQuantityChange = (e: any) => setQuantity(e.target.value);
   const handleAdd = () => setQuantity(textQuantity + 1);
   const handleMinus = () => setQuantity(textQuantity - 1);
+  const Loading = () => (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <CircularProgress />
+    </div>
+  );
 
   // run on load
   useEffect(() => {
-    getCart().then((cart) => {
+    getCart(loggedInUserEmail).then((cart) => {
       console.log(cart);
       setCart(cart);
     });
