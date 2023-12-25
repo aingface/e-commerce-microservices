@@ -25,9 +25,11 @@ class UserOut(UserBase):
     class Config:
         from_attributes = True
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
+class LoggedInUserInfo(BaseModel):
+    accessToken: str
+    tokenType: str
+    loggedInUserEmail: str
+    loggedInUserName: str
 
 
 class SignInRequest(BaseModel):

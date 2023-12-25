@@ -1,7 +1,7 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from db.dals.user_dal import UserDAL
-from db.models.user import UserIn, UserOut,Token, SignInRequest
+from db.models.user import UserIn, UserOut,LoggedInUserInfo, SignInRequest
 from dependencies import get_user_dal
 from jose import jwt
 from passlib.context import CryptContext
@@ -39,7 +39,7 @@ async def create_user(user: UserIn, user_dal: UserDAL = Depends(get_user_dal)):
         raise HTTPException(status_code=400, detail="🎃Email already registered")
     return await user_dal.create_user(user)
 
-@router.post("/sign-in", response_model=Token)
+@router.post("/sign-in", response_model=LoggedInUserInfo)
 async def verify_user(sign_in_request: SignInRequest, user_dal: UserDAL = Depends(get_user_dal)):
     db_user = await user_dal.verify_user(sign_in_request.email, sign_in_request.password)
     if db_user is None:
@@ -50,7 +50,7 @@ async def verify_user(sign_in_request: SignInRequest, user_dal: UserDAL = Depend
       data={"sub": db_user.email}, expires_delta=access_token_expires
     )
 
-    return {"access_token": access_token, "token_type": "bearer", "user_email": db_user.email ,"name": db_user.name}
+    return {"accessToken": access_token, "tokenType": "bearer", "loggedInUserEmail": db_user.email ,"loggedInUserName": db_user.name}
 
 @router.put("/users/{user_id}", response_model=UserOut)
 async def update_user(user_id: int, user: UserIn, user_dal: UserDAL = Depends(get_user_dal)):
