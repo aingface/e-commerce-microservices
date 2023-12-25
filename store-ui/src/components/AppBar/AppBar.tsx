@@ -19,7 +19,9 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
-
+import { useBearStore } from "../../store/store";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { render } from "@testing-library/react";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -70,12 +72,17 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const { accessToken, setLogoutData } = useBearStore();
+
   const handleProfileMenuOpen = (event: any) => {
-    // setAnchorEl(event.currentTarget);
     // 유저 로그인 정보가 있으면 마이페이지로 이동
-    navigate("/sign-in");
+    if (accessToken) {
+      navigate("/mypage");
+    }
     // 유저 로그인 정보가 없으면 로그인 페이지로 이동
-    // navigate("mypage");
+    else {
+      navigate("/sign-in");
+    }
   };
 
   const handleMobileMenuClose = () => {
@@ -94,6 +101,12 @@ export default function PrimarySearchAppBar() {
   const handleOnClickCart = () => {
     //현재 로그인한 유저가 있는지 검증 후 현재 로그인한 유저의 cart 정보를 보여주는 로직 구현 필요
     navigate("/cart");
+  };
+
+  const handleLogout = () => {
+    setLogoutData();
+    alert("로그아웃 되었습니다.");
+    navigate("/");
   };
 
   const menuId = "primary-search-account-menu";
@@ -141,6 +154,18 @@ export default function PrimarySearchAppBar() {
       </IconButton>
     </Box>
   );
+
+  const renderLogoutIcon = () => {
+    if (accessToken) {
+      return (
+        <IconButton sx={{ ml: 0 }} onClick={handleLogout} color="inherit">
+          <LogoutIcon />
+        </IconButton>
+      );
+    }
+
+    return null;
+  };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -240,6 +265,7 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
+            {renderLogoutIcon()}
             <IconButton
               size="large"
               aria-label="1 item in your shopping cart"
@@ -251,6 +277,7 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
           </Box>
+
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
