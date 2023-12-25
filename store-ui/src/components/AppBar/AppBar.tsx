@@ -100,6 +100,11 @@ export default function PrimarySearchAppBar() {
 
   const handleOnClickCart = () => {
     //현재 로그인한 유저가 있는지 검증 후 현재 로그인한 유저의 cart 정보를 보여주는 로직 구현 필요
+    if (!accessToken) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/sign-in");
+      return;
+    }
     navigate("/cart");
   };
 
@@ -272,9 +277,9 @@ export default function PrimarySearchAppBar() {
               color="inherit"
             >
               {/* 뱃지 카운트 하드코딩 돼있음. 실제 api와 연동 필요 */}
-              <Badge badgeContent={1} color="error">
-                <ShoppingCartIcon onClick={handleOnClickCart} />
-              </Badge>
+              {/* <Badge badgeContent={1} color="error"> */}
+              <ShoppingCartIcon onClick={handleOnClickCart} />
+              {/* </Badge> */}
             </IconButton>
           </Box>
 
