@@ -12,7 +12,7 @@ import StarIcon from "@mui/icons-material/Star";
 import axiosClient, { productsUrl } from "../../api/config";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import CardMedia from "@mui/material/CardMedia";
 const ProductList = () => {
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const ProductList = () => {
 
   const loadProductList = async () => {
     try {
-      const response = await axiosClient.get(productsUrl + "deals");
+      const response = await axiosClient.get(productsUrl + "products");
       setProductList(response.data);
       setError(null);
     } catch (err: any) {
@@ -34,74 +34,102 @@ const ProductList = () => {
     loadProductList();
   }, []);
 
+  const productCards: React.ReactNode = (
+    <Grid container>
+      {productList.map((productItem: any) => (
+        <Grid
+          item
+          key={productItem._id}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            paddingBottom: 2,
+          }}
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+        >
+          <Link
+            component="button"
+            onClick={() => {
+              navigate("product/" + productItem.sku);
+            }}
+            underline="none"
+          >
+            <Card sx={{ width: 240, height: 290 }}>
+              <CardMedia
+                sx={{ width: "100%", height: "65%" }}
+                image={productItem.thumbnail}
+                title={productItem.title}
+              />
+              <CardContent sx={{ height: 10 }}>
+                <Grid container>
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <Typography color="text.secondary">
+                      {productItem.title}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+              <CardActions>
+                <Grid container>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      p: 1,
+                      display: "flex",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <Typography variant="h6"> {productItem.price}원</Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Chip icon={<StarIcon />} label={productItem.rating} />
+                  </Grid>
+                </Grid>
+              </CardActions>
+            </Card>
+          </Link>
+        </Grid>
+      ))}
+    </Grid>
+  );
+
   return (
-    <Paper elevation={3} sx={{ pl: 2, pb: 2 }}>
-      <Typography variant="h6" sx={{ p: 1, color: "text.primary" }}>
+    <Paper
+      elevation={3}
+      sx={{
+        width: "60%",
+        pb: 3,
+        pt: 3,
+        // backgroundColor: "green",
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{ pt: 2, pl: 2, pb: 5, color: "text.primary" }}
+      >
         {" "}
         전체 상품
       </Typography>
-      <Grid container spacing={2}>
-        <>
-          {productList.slice(0, 5).map((productItem: any) => (
-            <Grid item key={productItem.dealId}>
-              <Link
-                component="button"
-                onClick={() => {
-                  navigate("product/" + productItem.variantSku);
-                }}
-                underline="none"
-              >
-                <Card sx={{ width: 250, height: 290 }}>
-                  <Box>
-                    <img
-                      src={productItem.thumbnail}
-                      height="150"
-                      alt={productItem.name}
-                    ></img>
-                  </Box>
-                  <CardContent sx={{ height: 50 }}>
-                    <Grid container>
-                      <Grid item xs={12}>
-                        <Typography color="text.secondary">
-                          {productItem.shortDescription}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                  <CardActions>
-                    <Grid container>
-                      <Grid
-                        item
-                        xs={6}
-                        sx={{
-                          p: 1,
-                          display: "flex",
-                          justifyContent: "flex-start",
-                        }}
-                      >
-                        <Typography variant="h6">
-                          $ {productItem.price}
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        item
-                        xs={6}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "flex-end",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Chip icon={<StarIcon />} label={productItem.rating} />
-                      </Grid>
-                    </Grid>
-                  </CardActions>
-                </Card>
-              </Link>
-            </Grid>
-          ))}
-        </>
-      </Grid>
+      {productCards}
     </Paper>
   );
 };
