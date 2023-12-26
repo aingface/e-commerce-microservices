@@ -1,18 +1,19 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Chip from "@mui/material/Chip";
-import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import StarIcon from "@mui/icons-material/Star";
-import axiosClient, { productsUrl } from "../../api/config";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import Chip from "@mui/material/Chip";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosClient, { productsUrl } from "../../api/config";
+import CircularProgress from "@mui/material/CircularProgress";
+
 const ProductList = () => {
   const navigate = useNavigate();
 
@@ -33,6 +34,24 @@ const ProductList = () => {
   useEffect(() => {
     loadProductList();
   }, []);
+
+  if (productList.length === 0) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "50%",
+        }}
+      >
+        <CircularProgress sx={{ color: "#AAFF38" }} size={100} thickness={10} />
+        <Typography variant="h4" sx={{ pl: 2 }}>
+          로딩중..🌱
+        </Typography>
+      </div>
+    );
+  }
 
   const productCards: React.ReactNode = (
     <Grid container>
