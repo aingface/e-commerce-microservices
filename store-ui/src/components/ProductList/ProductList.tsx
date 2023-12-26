@@ -106,7 +106,10 @@ const ProductList = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Chip icon={<StarIcon />} label={productItem.rating} />
+                    <Chip
+                      icon={<StarIcon sx={{ "&&": { color: "#FB9F2C" } }} />}
+                      label={productItem.rating}
+                    />
                   </Grid>
                 </Grid>
               </CardActions>
