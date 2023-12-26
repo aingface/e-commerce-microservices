@@ -8,7 +8,9 @@ function Home() {
 
   return (
     <div>
-      <Box sx={{ flexGrow: 1, p: 2 }}>
+      <Box
+        sx={{ flexGrow: 1, p: 2, display: "flex", justifyContent: "center" }}
+      >
         <ProductList />
       </Box>
     </div>
