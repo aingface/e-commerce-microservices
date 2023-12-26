@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosClient, { productsUrl } from "../../api/config";
 import { CircularLoading } from "../Loading/CircularLoading";
+import { formatPrice } from "../../factories/formatPrice";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -95,7 +96,10 @@ const ProductList = () => {
                       justifyContent: "flex-start",
                     }}
                   >
-                    <Typography variant="h6"> {productItem.price}원</Typography>
+                    <Typography variant="h6">
+                      {" "}
+                      {formatPrice(productItem.price)}원
+                    </Typography>
                   </Grid>
                   <Grid
                     item

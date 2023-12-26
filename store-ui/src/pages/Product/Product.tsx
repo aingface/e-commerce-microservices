@@ -9,14 +9,15 @@ import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import addToCart from "../../api/cart";
 import getProductByProductId from "../../api/products";
+import { CssTextField } from "../../components/CssTextField/CssTextField";
 import { CircularLoading } from "../../components/Loading/CircularLoading";
 import { useBearStore } from "../../store/store";
+import { formatPrice } from "../../factories/formatPrice";
+
 const Product = () => {
   const { id } = useParams();
 
@@ -67,26 +68,6 @@ const Product = () => {
     return <CircularLoading />;
   }
 
-  const CssTextField = styled(TextField)({
-    "& label.Mui-focused": {
-      color: "#A6CF5B",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#A6CF5B",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#A6CF5B",
-      },
-      "&:hover fieldset": {
-        borderColor: "#A6CF5B",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#A6CF5B",
-      },
-    },
-  });
-
   return (
     <Box
       sx={{
@@ -134,7 +115,9 @@ const Product = () => {
                 <Typography>{product?.description}</Typography>
               </Grid>
               <Grid item sx={{ p: 1 }}>
-                <Typography variant="h6">{product?.price}원</Typography>
+                <Typography variant="h6">
+                  {formatPrice(product?.price)}원
+                </Typography>
               </Grid>
               <Grid item sx={{ p: 1 }}>
                 <Chip
