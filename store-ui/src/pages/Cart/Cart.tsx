@@ -40,6 +40,16 @@ const Cart = () => {
   }
 
   const renderCartItems = () => {
+    if (cart.items.length === 0) {
+      return (
+        <Grid container direction="row" sx={{ p: 1 }}>
+          <Grid item xs={6}>
+            <Typography variant="h6">카트에 담긴 상품이 없습니다.</Typography>
+          </Grid>
+        </Grid>
+      );
+    }
+
     return cart.items.map((item: any, index: number) => (
       <Grid container key={index} direction="row" sx={{ p: 1 }}>
         <Grid item xs={6}>
