@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
-import Deals from "../../components/Deals/Deals";
+import ProductList from "../../components/ProductList/ProductList";
 import "./Home.css";
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
   return (
     <div>
       <Box sx={{ flexGrow: 1, p: 2 }}>
-        <Deals />
+        <ProductList />
       </Box>
     </div>
   );
