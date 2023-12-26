@@ -13,16 +13,16 @@ import axiosClient, { productsUrl } from "../../api/config";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Deals = () => {
+const ProductList = () => {
   const navigate = useNavigate();
 
-  const [deals, setDeals] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [error, setError] = useState(null);
 
-  const loadDeals = async () => {
+  const loadProductList = async () => {
     try {
       const response = await axiosClient.get(productsUrl + "deals");
-      setDeals(response.data);
+      setProductList(response.data);
       setError(null);
     } catch (err: any) {
       setError(err);
@@ -31,39 +31,39 @@ const Deals = () => {
 
   // run on load
   useEffect(() => {
-    loadDeals();
+    loadProductList();
   }, []);
 
   return (
     <Paper elevation={3} sx={{ pl: 2, pb: 2 }}>
       <Typography variant="h6" sx={{ p: 1, color: "text.primary" }}>
         {" "}
-        오늘의 딜
+        전체 상품
       </Typography>
       <Grid container spacing={2}>
         <>
-          {deals.slice(0, 5).map((deal: any) => (
-            <Grid item key={deal.dealId}>
+          {productList.slice(0, 5).map((productItem: any) => (
+            <Grid item key={productItem.dealId}>
               <Link
                 component="button"
                 onClick={() => {
-                  navigate("product/" + deal.variantSku);
+                  navigate("product/" + productItem.variantSku);
                 }}
                 underline="none"
               >
                 <Card sx={{ width: 250, height: 290 }}>
                   <Box>
                     <img
-                      src={deal.thumbnail}
+                      src={productItem.thumbnail}
                       height="150"
-                      alt={deal.name}
+                      alt={productItem.name}
                     ></img>
                   </Box>
                   <CardContent sx={{ height: 50 }}>
                     <Grid container>
                       <Grid item xs={12}>
                         <Typography color="text.secondary">
-                          {deal.shortDescription}
+                          {productItem.shortDescription}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -79,7 +79,9 @@ const Deals = () => {
                           justifyContent: "flex-start",
                         }}
                       >
-                        <Typography variant="h6">$ {deal.price}</Typography>
+                        <Typography variant="h6">
+                          $ {productItem.price}
+                        </Typography>
                       </Grid>
                       <Grid
                         item
@@ -90,7 +92,7 @@ const Deals = () => {
                           alignItems: "center",
                         }}
                       >
-                        <Chip icon={<StarIcon />} label={deal.rating} />
+                        <Chip icon={<StarIcon />} label={productItem.rating} />
                       </Grid>
                     </Grid>
                   </CardActions>
@@ -104,4 +106,4 @@ const Deals = () => {
   );
 };
 
-export default Deals;
+export default ProductList;
