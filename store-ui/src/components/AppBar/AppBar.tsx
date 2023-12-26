@@ -178,7 +178,11 @@ export default function PrimarySearchAppBar() {
             }}
           >
             <img src="logo.png" width="32" height="32" alt="logo" />
-            &nbsp; 새싹농장마켓
+            <Typography
+              sx={{ color: "white", fontWeight: "bold", fontSize: 20 }}
+            >
+              &nbsp;새싹농장마켓
+            </Typography>
           </Link>
           <Box sx={{ flexGrow: 1 }} />
 
