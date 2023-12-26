@@ -12,7 +12,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosClient, { productsUrl } from "../../api/config";
-import CircularProgress from "@mui/material/CircularProgress";
+import { CircularLoading } from "../Loading/CircularLoading";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -36,21 +36,7 @@ const ProductList = () => {
   }, []);
 
   if (productList.length === 0) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "50%",
-        }}
-      >
-        <CircularProgress sx={{ color: "#AAFF38" }} size={100} thickness={10} />
-        <Typography variant="h4" sx={{ pl: 2 }}>
-          로딩중..🌱
-        </Typography>
-      </div>
-    );
+    return <CircularLoading />;
   }
 
   const productCards: React.ReactNode = (
@@ -72,7 +58,7 @@ const ProductList = () => {
           <Link
             component="button"
             onClick={() => {
-              navigate("product/" + productItem.sku);
+              navigate("product/" + productItem._id);
             }}
             underline="none"
           >
