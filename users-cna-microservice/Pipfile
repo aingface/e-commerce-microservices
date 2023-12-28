@@ -10,6 +10,7 @@ sqlalchemy = "*"
 aiosqlite = "*"
 typing-extensions = "*"
 greenlet = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
