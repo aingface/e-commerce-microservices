@@ -1,5 +1,4 @@
-// Loads the configuration from config.env to process.env
-require("dotenv").config({ path: "./.env" });
+// Loads the configuration from config.env to
 const deals = require("./data/deals");
 const products = require("./data/products");
 
