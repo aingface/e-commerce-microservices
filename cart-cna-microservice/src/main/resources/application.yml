@@ -1,6 +1,6 @@
 spring:
   server:
-    port: ${CART_PORT:5020}
+    port: ${CART_SERVER_PORT:5020}
   redis:
     host: ${SPRING_REDIS_HOST:localhost}
     port: ${SPRING_REDIS_PORT:6379}
