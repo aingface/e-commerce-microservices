@@ -80,7 +80,7 @@ public class CartController {
         }).then();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @PostMapping("/cart/{customerId}")
     public Mono<ResponseEntity<Void>> addToCart(@PathVariable String customerId, @RequestBody Mono<CartItem> newItemMono) {
         return newItemMono.doOnNext(newItem -> LOG.info("🔥🔥🔥🔥 Adding item to cart: {}", newItem))
