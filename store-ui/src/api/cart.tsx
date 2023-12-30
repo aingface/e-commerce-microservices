@@ -5,7 +5,7 @@ const addToCart = async (loggedInUserEmail: string | null, item: any) => {
   // 로그인한 유저가 없으면 temp 카트에 추가(사이트 나가면 없어짐) => 이건 나중에 구현
 
   try {
-    const response = await axiosClient.post(`${cartUrl}/${loggedInUserEmail}`, {
+    const response = await axiosClient.post(`${cartUrl}${loggedInUserEmail}`, {
       productId: item.productId,
       sku: item.sku,
       title: item.title,
@@ -26,7 +26,7 @@ const addToCart = async (loggedInUserEmail: string | null, item: any) => {
 
 export const getCart = async (loggedInUserEmail: string | null) => {
   try {
-    const response = await axiosClient.get(`${cartUrl}/${loggedInUserEmail}`);
+    const response = await axiosClient.get(`${cartUrl}${loggedInUserEmail}`);
     return response.data;
   } catch (err: any) {
     console.log(err);
