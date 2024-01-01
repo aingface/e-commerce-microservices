@@ -23,3 +23,8 @@
 
 # IDE Files
 .vscode
+
+docker-compose.yaml
+docker-compose.yml
+
+
