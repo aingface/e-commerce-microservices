@@ -5,5 +5,5 @@ images:
   newName: ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/demo-products-backend
   newTag: v1.0.1
 namespace: e-commerce
-bases:
+resources:
 - ../../../base/products
