@@ -1,14 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+images:
+- name: ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/demo-cart-backend
+  newName: ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/demo-cart-backend
+  newTag: v1.0.1
 namespace: e-commerce
-configMapGenerator:
-  - name: cart-configmap
-    literals: 
-    - SPRING_REDIS_HOST=redis-service.shared-services.svc.cluster.local
-    - SPRING_REDIS_PORT=6379
-    - SPRING_REDIS_PASSWORD=
-generatorOptions:
-  disableNameSuffixHash: true # use a static name
-
 bases:
 - ../../../base/cart
