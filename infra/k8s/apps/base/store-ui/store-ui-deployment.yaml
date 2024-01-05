@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,9 +14,10 @@ spec:
     spec:
       containers:
       - name: store-ui
-        image: store-ui:latest
+        image: 375586205616.dkr.ecr.ap-northeast-2.amazonaws.com/demo-ui-frontend:1.6
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
           containerPort: 80
           protocol: TCP
+          

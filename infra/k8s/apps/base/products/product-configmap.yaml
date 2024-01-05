@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2024-01-04T06:30:34Z"
+  name: product-mongo
+  namespace: default
+  resourceVersion: "2261631"
+  uid: c87d8115-1e34-4524-b53a-859dbb4b1413
+data:
+  MONGO_DB: e-commerce-product-ms
+  MONGO_HOST: cluster0.r3lyou4.mongodb.net
+  MONGO_USER: qoeocjf5
+  SERVER_PORT: "5010"

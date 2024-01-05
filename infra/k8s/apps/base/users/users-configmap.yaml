@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2024-01-04T07:27:27Z"
+  name: users-postgre
+  namespace: default
+  resourceVersion: "2275227"
+  uid: 711e48b4-1096-49a3-96f8-eeb07acd7b4b
+data:
+  APP_HOST: 0.0.0.0
+  APP_PORT: "5030"
+  APP_RELOAD: "False"
+  CORS_ORIGINS: '*'
+  DB_ENGINE: postgresql+asyncpg
+  DB_HOST: ecommerce-users.cgkwkptg3vmk.ap-northeast-2.rds.amazonaws.com
+  DB_NAME: ecommerce_users
+  DB_USERNAME: users_admin
