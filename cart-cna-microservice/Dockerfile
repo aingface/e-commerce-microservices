@@ -1,7 +1,7 @@
-FROM openjdk:17-jdk-oracle
+FROM openjdk:17-alpine
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
-RUN microdnf install findutils
+RUN apk add --no-cache findutils
 COPY gradlew .
 COPY gradle gradle
 COPY settings.gradle .
