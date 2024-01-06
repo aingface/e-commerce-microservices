@@ -11,7 +11,7 @@ RUN pwd
 RUN ls /root -l
 RUN ls /dev -l
 RUN ls /home -l
-RUN ls /build -l
-RUN ls /build/libs -l
+# RUN ls /build -l
+# RUN ls /build/libs -l
 RUN find . -name "*.jar"
 ENTRYPOINT ["java","-jar","/app.jar", "--server.port=${CART_SERVER_PORT}"]
