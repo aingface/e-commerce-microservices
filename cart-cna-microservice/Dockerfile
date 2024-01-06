@@ -7,7 +7,7 @@ COPY settings.gradle .
 COPY build.gradle .
 RUN chmod +x ./gradlew
 RUN ls -l 
-RUN ./gradlew build -i 
+RUN ./gradlew build -d
 RUN find . -name "*.jar"
 # RUN ls -l 
 COPY app/build/libs/*.jar app.jar
