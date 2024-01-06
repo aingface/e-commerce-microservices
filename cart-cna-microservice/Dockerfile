@@ -12,4 +12,4 @@ RUN ./gradlew build -i
 RUN cp build/libs/*.jar app.jar
 RUN find . -name "*.jar"
 # COPY ./build/libs/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar", "--server.port=${CART_SERVER_PORT}"]
+ENTRYPOINT ["java","-jar","./app.jar", "--server.port=${CART_SERVER_PORT}"]
