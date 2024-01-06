@@ -6,7 +6,8 @@ COPY gradle gradle
 COPY settings.gradle .
 COPY build.gradle .
 RUN chmod +x ./gradlew
-RUN ./gradlew build -i && find . -name "*.jar"
+RUN ./gradlew build -i 
+RUN find . -name "*.jar"
 RUN ls -l 
 COPY app/build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar", "--server.port=${CART_SERVER_PORT}"]
