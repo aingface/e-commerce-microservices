@@ -15,11 +15,6 @@ configurations {
 	}
 }
 
-jar {
-    archiveFileName = 'cart.jar'
-    destinationDir = file("${buildDir}/libs")
-}
-
 repositories {
 	mavenCentral()
 }
