@@ -8,7 +8,7 @@ COPY settings.gradle .
 COPY build.gradle .
 RUN chmod +x ./gradlew
 RUN ls -l 
-RUN ./gradlew build -d
+RUN ./gradlew build -i
 RUN find . -name "*.jar"
 COPY build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar", "--server.port=${CART_SERVER_PORT}"]
