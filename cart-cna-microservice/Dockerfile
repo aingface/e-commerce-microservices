@@ -3,15 +3,7 @@ RUN microdnf install findutils
 COPY gradlew .
 COPY gradle gradle
 COPY settings.gradle .
-RUN 
 RUN chmod +x ./gradlew
-RUN ./gradlew build -i
-COPY /*.jar app.jar
-RUN pwd
-RUN ls /root -l
-RUN ls /dev -l
-RUN ls /home -l
-# RUN ls /build -l
-# RUN ls /build/libs -l
-RUN find . -name "*.jar"
+RUN ./gradlew build -i && find . -name "*.jar"
+COPY build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar", "--server.port=${CART_SERVER_PORT}"]
