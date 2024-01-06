@@ -4,7 +4,7 @@ COPY gradlew .
 COPY gradle gradle
 COPY settings.gradle .
 RUN chmod +x ./gradlew
-RUN ./gradlew clean build
+RUN ./gradlew build -d
 COPY build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar", "--server.port=${CART_SERVER_PORT}"]
 
