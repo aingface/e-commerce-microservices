@@ -1,10 +1,5 @@
 FROM gradle:8.5.0-jdk17 AS builder
 WORKDIR /app
-# COPY gradlew .
-# COPY gradle gradle
-# COPY settings.gradle .
-# COPY build.gradle .
-# COPY src ./src
 COPY . .
 RUN chmod +x ./gradlew
 RUN ./gradlew build -i -x test
