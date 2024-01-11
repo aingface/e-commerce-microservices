@@ -73,7 +73,7 @@ const Product = () => {
     getProductByProductId(id).then((result) => setProduct(result));
   }, []);
 
-  if (product.length === 0) {
+  if (!product || Object.keys(product).length === 0) {
     return <CircularLoading />;
   }
 
